@@ -24,8 +24,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
-import com.alee.laf.WebLookAndFeel;
-
 import controller.Controller;
 
 public class MainFrame extends JFrame {
@@ -58,7 +56,7 @@ public class MainFrame extends JFrame {
 		try
 		{
 		    // Setting up WebLookAndFeel style
-		    UIManager.setLookAndFeel ( WebLookAndFeel.class.getCanonicalName () );
+		    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		}
 		catch ( Throwable e )
 		{
@@ -80,7 +78,7 @@ public class MainFrame extends JFrame {
 		popup = new JPopupMenu();
 		
 		
-		JMenuItem removeItem = new JMenuItem("Закрыть");
+		JMenuItem removeItem = new JMenuItem("");
 		popup.add(removeItem);
 		
 		
@@ -114,8 +112,8 @@ public class MainFrame extends JFrame {
 		tabbedPane.setIconAt(2, createIcon("/images/1400445243_text_horizontalrule.png"));
 		
 		
-		tabbedPane2.addTab(" Талица  ", tablePanel);
-		tabbedPane2.addTab(" Блокнот ", textPanel4);
+		tabbedPane2.addTab("   ", tablePanel);
+		tabbedPane2.addTab("  ", textPanel4);
 		tabbedPane2.setIconAt(0, createIcon("/images/1400446085_Table_16x16.png"));
 		tabbedPane2.setIconAt(1, createIcon("/images/notepad.gif"));
 		
@@ -179,54 +177,54 @@ public class MainFrame extends JFrame {
 		textPanel3.AddKeyListenerRevelance(new KeyAdapter()
 		{
 			 public void  keyPressed(KeyEvent e) {
-	            	if(e.getKeyCode() == KeyEvent.VK_ENTER)
-	            	{
-	            		if(textPanel3.getTextContains("%CLEAR%"))
-	            		{
-	            			
-	            			textPanel3.DeleteText();
-	            			textPanel.appendText("Messages window is clear");
-	            			System.out.println("OK");
-	            		
-	            				
-	            		}
-	            		else
-	            		{
-	            			System.out.println("чистое поле");
-	            		}
-	            	}
-	            	else
-	            	{
-	            		
-	            	}
-	            }
+            	if(e.getKeyCode() == KeyEvent.VK_ENTER)
+            	{
+            		if(textPanel3.getTextContains("%CLEAR%"))
+            		{
+            			
+            			textPanel3.DeleteText();
+            			textPanel.appendText("Messages window is clear");
+            			System.out.println("OK");
+            		
+            				
+            		}
+            		else
+            		{
+            			System.out.println(" ");
+            		}
+            	}
+            	else
+            	{
+            		
+            	}
+            }
 		});
 		
 		textPanel3.AddKeyListenerRevelance(new KeyAdapter()
 		{
 			 public void  keyPressed(KeyEvent e) {
-	            	if(e.getKeyCode() == KeyEvent.VK_ENTER)
-	            	{
-	            		if(textPanel3.getTextContains("%NEW_TPANEL%"))
-	            		{
-	            			
-	            			textPanel3.DeleteText();
-	            			 CreateNewTable(new TextPanel2());
-	            			
-	            			 textPanel.appendText("New text panel created...");
-	            		
-	            				
-	            		}
-	            		else
-	            		{
-	            			System.out.println("чистое поле");
-	            		}
-	            	}
-	            	else
-	            	{
-	            		
-	            	}
-	            }
+            	if(e.getKeyCode() == KeyEvent.VK_ENTER)
+            	{
+            		if(textPanel3.getTextContains("%NEW_TPANEL%"))
+            		{
+            			
+            			textPanel3.DeleteText();
+            			 CreateNewTable(new TextPanel2());
+            			
+            			 textPanel.appendText("New text panel created...");
+            		
+            				
+            		}
+            		else
+            		{
+            			System.out.println(" ");
+            		}
+            	}
+            	else
+            	{
+            		
+            	}
+            }
 		});
 		
 		toolbar.setToolbarListener(new ToolbarListener() {
@@ -320,8 +318,8 @@ public class MainFrame extends JFrame {
 		fileMenu.addSeparator();
 		fileMenu.add(exitItem);
 		
-		JMenu paramMenu = new JMenu("Помощь");
-		JMenuItem aboutItem = new JMenuItem("О программе");
+		JMenu paramMenu = new JMenu("");
+		JMenuItem aboutItem = new JMenuItem(" ");
 		aboutItem.setIcon(createIcon("/images/1400445676_Help.png"));
 		JMenuItem licenseItem = new JMenuItem("License");
 		
@@ -333,7 +331,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			 
 				
-				JOptionPane.showMessageDialog(MainFrame.this, "Created by KN NTU","О программе",1);
+				JOptionPane.showMessageDialog(MainFrame.this, "Created by KN NTU"," ",1);
 				
 			
 				
@@ -462,7 +460,7 @@ public class MainFrame extends JFrame {
 	{
 		
 		 
-		tabbedPane2.addTab(" Блокнот "+ number, text);
+		tabbedPane2.addTab("  "+ number, text);
 		tabbedPane2.setIconAt(pos, createIcon("/images/notepad.gif"));
 		pos++;
 		number++;
