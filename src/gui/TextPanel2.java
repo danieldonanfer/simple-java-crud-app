@@ -27,7 +27,7 @@ public class TextPanel2 extends JPanel {
 		textArea = new JTextArea();
 		popup = new JPopupMenu();
 		
-		JMenuItem removeItem = new JMenuItem("Очистить");
+		JMenuItem removeItem = new JMenuItem("Remover");
 		popup.add(removeItem);
 		
 		removeItem.addActionListener(new ActionListener()
