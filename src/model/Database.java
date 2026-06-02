@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.mysql.jdbc.ResultSet;
+import java.sql.ResultSet;
 
 public class Database {
 	
