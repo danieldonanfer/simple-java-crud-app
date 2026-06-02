@@ -24,7 +24,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
-import com.alee.laf.WebLookAndFeel;
+UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 
 import controller.Controller;
 
@@ -80,7 +80,7 @@ public class MainFrame extends JFrame {
 		popup = new JPopupMenu();
 		
 		
-		JMenuItem removeItem = new JMenuItem("Закрыть");
+		JMenuItem removeItem = new JMenuItem("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		popup.add(removeItem);
 		
 		
@@ -114,8 +114,8 @@ public class MainFrame extends JFrame {
 		tabbedPane.setIconAt(2, createIcon("/images/1400445243_text_horizontalrule.png"));
 		
 		
-		tabbedPane2.addTab(" Талица  ", tablePanel);
-		tabbedPane2.addTab(" Блокнот ", textPanel4);
+		tabbedPane2.addTab(" пїЅпїЅпїЅпїЅпїЅпїЅ  ", tablePanel);
+		tabbedPane2.addTab(" пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ", textPanel4);
 		tabbedPane2.setIconAt(0, createIcon("/images/1400446085_Table_16x16.png"));
 		tabbedPane2.setIconAt(1, createIcon("/images/notepad.gif"));
 		
@@ -192,7 +192,7 @@ public class MainFrame extends JFrame {
 	            		}
 	            		else
 	            		{
-	            			System.out.println("чистое поле");
+	            			System.out.println("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ");
 	            		}
 	            	}
 	            	else
@@ -219,7 +219,7 @@ public class MainFrame extends JFrame {
 	            		}
 	            		else
 	            		{
-	            			System.out.println("чистое поле");
+	            			System.out.println("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ");
 	            		}
 	            	}
 	            	else
@@ -320,8 +320,8 @@ public class MainFrame extends JFrame {
 		fileMenu.addSeparator();
 		fileMenu.add(exitItem);
 		
-		JMenu paramMenu = new JMenu("Помощь");
-		JMenuItem aboutItem = new JMenuItem("О программе");
+		JMenu paramMenu = new JMenu("пїЅпїЅпїЅпїЅпїЅпїЅ");
+		JMenuItem aboutItem = new JMenuItem("пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		aboutItem.setIcon(createIcon("/images/1400445676_Help.png"));
 		JMenuItem licenseItem = new JMenuItem("License");
 		
@@ -333,7 +333,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			 
 				
-				JOptionPane.showMessageDialog(MainFrame.this, "Created by KN NTU","О программе",1);
+				JOptionPane.showMessageDialog(MainFrame.this, "Created by KN NTU","пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",1);
 				
 			
 				
@@ -462,7 +462,7 @@ public class MainFrame extends JFrame {
 	{
 		
 		 
-		tabbedPane2.addTab(" Блокнот "+ number, text);
+		tabbedPane2.addTab(" пїЅпїЅпїЅпїЅпїЅпїЅпїЅ "+ number, text);
 		tabbedPane2.setIconAt(pos, createIcon("/images/notepad.gif"));
 		pos++;
 		number++;
