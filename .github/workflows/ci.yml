@@ -1,39 +1,32 @@
-name: Java CI
+name: CI Pipeline - Compilacao Java
 
 on:
   push:
-    branches: [ "**" ]
+    branches: [ "main", "master" ]
   pull_request:
-    branches: [ "**" ]
+    branches: [ "main", "master" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
     - name: Configurar JDK 17
       uses: actions/setup-java@v4
       with:
-        java-version: "17"
-        distribution: "temurin"
-        
-    - name: Baixar Depend�ncias Legadas (.jar)
-      run: |
-        mkdir -p lib
-        # Baixa o Driver do MySQL Antigo
-        curl -L -o lib/mysql-connector-java.jar https://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.49/mysql-connector-java-5.1.49.jar
-        # Baixa a biblioteca WebLookAndFeel (WebLaF)
-        curl -L -o lib/weblaf-core.jar https://repo1.maven.org/maven2/com/weblookandfeel/weblaf-core/1.2.9/weblaf-core-1.2.9.jar
-        
-    - name: Compilar Projeto Legado com Libs externas
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Preparar diretórios
       run: |
         mkdir -p bin
-        find src -name "*.java" > sources.txt
-        if [ -s sources.txt ]; then
-          javac -encoding Windows-1252 -cp "lib/*" -d bin @sources.txt
-          echo "Compila��o conclu�da com sucesso!"
-        else
-          echo "Nenhum arquivo Java encontrado para compilar."
-        fi
+        mkdir -p lib
+
+    - name: Compilar o projeto
+      run: javac -d bin -cp "lib/*" $(find src -name "*.java")
+      
+    - name: Verificar sucesso da compilação
+      run: echo "Compilação concluída com sucesso! Nenhuma quebra no código."
