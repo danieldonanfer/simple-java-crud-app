@@ -58,7 +58,7 @@ public class MainFrame extends JFrame {
 		try
 		{
 		    // Setting up WebLookAndFeel style
-		    UIManager.setLookAndFeel ( WebLookAndFeel.class.getCanonicalName () );
+		    UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		}
 		catch ( Throwable e )
 		{
