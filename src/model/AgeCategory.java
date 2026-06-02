@@ -1,9 +1,9 @@
 package model;
 
 public enum AgeCategory {
-	Nissan,
-	Mazda,
-	Land_Rover,
-	Lada,
-	Honda
+	CRIANCA,
+	ADOLESCENTE,
+	ADULTO,
+	MEIA_IDADE,
+	IDOSO
 }

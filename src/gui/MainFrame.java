@@ -49,7 +49,7 @@ public class MainFrame extends JFrame {
 
 	public MainFrame() {
 		
-		super("Course work");
+		super("Cadastro de Pessoas");
 		
 		
 	

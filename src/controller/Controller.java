@@ -54,38 +54,37 @@ public class Controller {
 		
 		switch(ageCatId) {
 		case 0:
-			ageCategory = AgeCategory.Nissan;
+			ageCategory = AgeCategory.CRIANCA;
 			break;
 		case 1:
-			ageCategory = AgeCategory.Mazda;
+			ageCategory = AgeCategory.ADOLESCENTE;
 			break;
 		case 2:
-			ageCategory = AgeCategory.Land_Rover;
+			ageCategory = AgeCategory.ADULTO;
 			break;
 		case 3:
-			ageCategory = AgeCategory.Lada;
+			ageCategory = AgeCategory.MEIA_IDADE;
 			break;
 		case 4:
-			ageCategory = AgeCategory.Honda;
+			ageCategory = AgeCategory.IDOSO;
 			break;
-		
+
 		}
 		
 		
 		EmploymentCategory empCategory;
 		
-		if(empCat.equals("есть")) {
+		if(empCat.equals("Empregado")) {
 			empCategory = EmploymentCategory.yes;
 		}
-		else if(empCat.equals("нет")) {
+		else if(empCat.equals("Desempregado")) {
 			empCategory = EmploymentCategory.no;
 		}
-		else if(empCat.equals("склад")) {
+		else if(empCat.equals("Autonomo")) {
 			empCategory = EmploymentCategory.sklad;
 		}
 		else {
 			empCategory = EmploymentCategory.other;
-			System.err.println(empCat);
 		}
 		
 		Gender genderCat;

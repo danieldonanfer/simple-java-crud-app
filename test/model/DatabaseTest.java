@@ -28,9 +28,9 @@ public class DatabaseTest {
     @Before
     public void setUp() {
         db = new Database();
-        p1 = new Person("Maria Oliveira", "Médica", AgeCategory.Nissan,
+        p1 = new Person("Maria Oliveira", "Médica", AgeCategory.ADULTO,
                 EmploymentCategory.yes, "111.222.333-44", true, Gender.yes);
-        p2 = new Person("Pedro Costa", "Advogado", AgeCategory.Mazda,
+        p2 = new Person("Pedro Costa", "Advogado", AgeCategory.ADOLESCENTE,
                 EmploymentCategory.no, "555.666.777-88", false, Gender.no);
     }
 
@@ -133,7 +133,7 @@ public class DatabaseTest {
         db.addPerson(p2);
 
         Database db2 = new Database();
-        db2.addPerson(new Person("Extra", "Extra", AgeCategory.Honda,
+        db2.addPerson(new Person("Extra", "Extra", AgeCategory.IDOSO,
                 EmploymentCategory.other, "000", false, Gender.no));
         db2.loadFromFile(file);
 
