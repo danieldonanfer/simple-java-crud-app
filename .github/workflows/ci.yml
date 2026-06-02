@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout do código
+    - name: Checkout do codigo
       uses: actions/checkout@v4
 
     - name: Configurar JDK 17
@@ -20,13 +20,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Preparar diretórios
+    - name: Preparar diretorios
       run: |
         mkdir -p bin
         mkdir -p lib
 
-   - name: Compilar o projeto
+    - name: Compilar o projeto
       run: javac -encoding windows-1251 -d bin -cp "lib/*" $(find src -name "*.java")
       
-    - name: Verificar sucesso da compilação
-      run: echo "Compilação concluída com sucesso! Nenhuma quebra no código."
+    - name: Verificar sucesso
+      run: echo "Compilação concluída com sucesso!"
