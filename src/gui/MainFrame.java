@@ -305,10 +305,10 @@ public class MainFrame extends JFrame {
 	private JMenuBar createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 
-		JMenu fileMenu = new JMenu("File");
-		JMenuItem exportDataItem = new JMenuItem("Export Data...");
-		JMenuItem importDataItem = new JMenuItem("Import Data...");
-		JMenuItem exitItem = new JMenuItem("Exit");
+		JMenu fileMenu = new JMenu("Arquivo");
+		JMenuItem exportDataItem = new JMenuItem("Exportar Dados...");
+		JMenuItem importDataItem = new JMenuItem("Importar Dados...");
+		JMenuItem exitItem = new JMenuItem("Sair");
 		
 		exportDataItem.setIcon(createIcon("/images/1400444602_table-export.png"));
 		importDataItem.setIcon(createIcon("/images/1400444586_import.png"));
@@ -318,10 +318,10 @@ public class MainFrame extends JFrame {
 		fileMenu.addSeparator();
 		fileMenu.add(exitItem);
 		
-		JMenu paramMenu = new JMenu("");
-		JMenuItem aboutItem = new JMenuItem(" ");
+		JMenu paramMenu = new JMenu("Ajuda");
+		JMenuItem aboutItem = new JMenuItem("Sobre");
 		aboutItem.setIcon(createIcon("/images/1400445676_Help.png"));
-		JMenuItem licenseItem = new JMenuItem("License");
+		JMenuItem licenseItem = new JMenuItem("Licenca");
 		
 		paramMenu.add(aboutItem);
 		paramMenu.add(licenseItem);
@@ -331,7 +331,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			 
 				
-				JOptionPane.showMessageDialog(MainFrame.this, "Created by KN NTU"," ",1);
+				JOptionPane.showMessageDialog(MainFrame.this, "Desenvolvido para Manutencao de Software - UNICSUL","Sobre",1);
 				
 			
 				
@@ -341,11 +341,11 @@ public class MainFrame extends JFrame {
 		
 		
 
-		JMenu windowMenu = new JMenu("Window");
-		
-		JMenu showMenu = new JMenu("Show");
+		JMenu windowMenu = new JMenu("Janela");
 
-		JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Add detail");
+		JMenu showMenu = new JMenu("Exibir");
+
+		JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Painel de Cadastro");
 		showFormItem.setIcon(createIcon("/images/1400445557_Windows_16x16.png"));
 		JCheckBoxMenuItem showConsole = new JCheckBoxMenuItem("Console");
 		showConsole.setIcon(createIcon("/images/1400445557_Windows_16x16.png"));
@@ -415,8 +415,8 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				int action = JOptionPane.showConfirmDialog(MainFrame.this,
-						"Do you really want to exit the application?",
-						"Confirm Exit", JOptionPane.OK_CANCEL_OPTION);
+						"Deseja realmente sair do sistema?",
+						"Confirmar Saida", JOptionPane.OK_CANCEL_OPTION);
 
 				if (action == JOptionPane.OK_OPTION) {
 					System.exit(0);

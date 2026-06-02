@@ -20,10 +20,10 @@ public class Toolbar extends JPanel implements ActionListener {
 	public Toolbar() {
 		setBorder(BorderFactory.createEtchedBorder());
 		
-		saveButton = new JButton("Save");
+		saveButton = new JButton("Salvar");
 		saveButton.setIcon(createIcon("/images/1400444547_document-save.png"));
-		
-		refreshButton = new JButton("Refresh");
+
+		refreshButton = new JButton("Atualizar");
 		refreshButton.setIcon(createIcon("/images/1400444569_gtk-refresh.png"));
 		
 		saveButton.addActionListener(this);
