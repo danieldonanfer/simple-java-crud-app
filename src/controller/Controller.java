@@ -46,9 +46,11 @@ public class Controller {
 		String occupation = ev.getOccupation();
 		int ageCatId = ev.getAgeCategory();
 		String empCat = ev.getEmploymentCategory();
-		boolean isUs = ev.isUsCitizen();
+		boolean ativo = ev.isAtivo();
 		String taxId = ev.getTaxId();
 		String gender = ev.getGender();
+		String email = ev.getEmail();
+		String telefone = ev.getTelefone();
 		
 		AgeCategory ageCategory = null;
 		
@@ -96,8 +98,8 @@ public class Controller {
 			genderCat = Gender.FEMININO;
 		}
 		
-		Person person = new Person(name, occupation, ageCategory, empCategory, 
-				taxId, isUs, genderCat);
+		Person person = new Person(name, occupation, ageCategory, empCategory,
+				taxId, ativo, genderCat, email, telefone);
 		
 		db.addPerson(person);
 	}
