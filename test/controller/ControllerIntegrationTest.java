@@ -12,10 +12,6 @@ import model.Gender;
 import model.Person;
 import gui.FormEvent;
 
-/**
- * Testes de integração entre Controller e Database (em memória).
- * Valida o fluxo completo de adicionar e remover pessoas sem banco de dados.
- */
 public class ControllerIntegrationTest {
 
     private Controller controller;
@@ -26,118 +22,93 @@ public class ControllerIntegrationTest {
     }
 
     private FormEvent buildFormEvent(String name, String occupation,
-            int ageCatId, String empCat, boolean isUs,
+            int ageCatId, String empCat, boolean ativo,
             String taxId, String gender) {
-        FormEvent ev = new FormEvent(new Object(), name, occupation,
-                ageCatId, empCat, isUs, taxId, gender);
-        return ev;
+        return new FormEvent(new Object(), name, occupation,
+                ageCatId, empCat, ativo, taxId, gender);
     }
-
-    // --- Testes de addPerson via FormEvent ---
 
     @Test
     public void testAddPersonResultsInOnePerson() {
-        FormEvent ev = buildFormEvent("Lucas Lima", "Professor",
-                0, "yes", true, "999.888.777-66", "yes");
-        controller.addPerson(ev);
+        controller.addPerson(buildFormEvent("Lucas Lima", "Professor", 0, "Empregado", true, "999", "MASCULINO"));
         assertEquals(1, controller.getPeople().size());
     }
 
     @Test
     public void testAddPersonPreservesName() {
-        FormEvent ev = buildFormEvent("Lucas Lima", "Professor",
-                0, "yes", true, "999.888.777-66", "yes");
-        controller.addPerson(ev);
+        controller.addPerson(buildFormEvent("Lucas Lima", "Professor", 0, "Empregado", true, "999", "MASCULINO"));
         assertEquals("Lucas Lima", controller.getPeople().get(0).getName());
     }
 
     @Test
     public void testAddTwoPeople() {
-        FormEvent ev1 = buildFormEvent("Lucas Lima", "Professor",
-                0, "yes", true, "111", "yes");
-        FormEvent ev2 = buildFormEvent("Carla Souza", "Designer",
-                1, "no", false, "222", "no");
-        controller.addPerson(ev1);
-        controller.addPerson(ev2);
+        controller.addPerson(buildFormEvent("Lucas Lima", "Professor", 0, "Empregado", true, "111", "MASCULINO"));
+        controller.addPerson(buildFormEvent("Carla Souza", "Designer", 1, "Desempregado", false, "222", "FEMININO"));
         assertEquals(2, controller.getPeople().size());
     }
 
     @Test
     public void testAddPersonMapsAgeCategoryCorrectly_Crianca() {
-        FormEvent ev = buildFormEvent("Test", "occ", 0, "yes", true, "1", "yes");
-        controller.addPerson(ev);
+        controller.addPerson(buildFormEvent("Test", "occ", 0, "Empregado", true, "1", "MASCULINO"));
         assertEquals(AgeCategory.CRIANCA, controller.getPeople().get(0).getAgeCategory());
     }
 
     @Test
     public void testAddPersonMapsAgeCategoryCorrectly_Adolescente() {
-        FormEvent ev = buildFormEvent("Test", "occ", 1, "yes", true, "1", "yes");
-        controller.addPerson(ev);
+        controller.addPerson(buildFormEvent("Test", "occ", 1, "Empregado", true, "1", "MASCULINO"));
         assertEquals(AgeCategory.ADOLESCENTE, controller.getPeople().get(0).getAgeCategory());
     }
 
     @Test
     public void testAddPersonMapsAgeCategoryCorrectly_Adulto() {
-        FormEvent ev = buildFormEvent("Test", "occ", 2, "yes", true, "1", "yes");
-        controller.addPerson(ev);
+        controller.addPerson(buildFormEvent("Test", "occ", 2, "Empregado", true, "1", "MASCULINO"));
         assertEquals(AgeCategory.ADULTO, controller.getPeople().get(0).getAgeCategory());
     }
 
     @Test
     public void testAddPersonMapsAgeCategoryCorrectly_Idoso() {
-        FormEvent ev = buildFormEvent("Test", "occ", 4, "yes", true, "1", "yes");
-        controller.addPerson(ev);
+        controller.addPerson(buildFormEvent("Test", "occ", 4, "Empregado", true, "1", "MASCULINO"));
         assertEquals(AgeCategory.IDOSO, controller.getPeople().get(0).getAgeCategory());
     }
 
     @Test
-    public void testAddPersonGenderYes() {
-        FormEvent ev = buildFormEvent("Test", "occ", 0, "yes", true, "1", "yes");
-        controller.addPerson(ev);
-        assertEquals(Gender.yes, controller.getPeople().get(0).getGender());
+    public void testAddPersonGenderMasculino() {
+        controller.addPerson(buildFormEvent("Test", "occ", 0, "Empregado", true, "1", "MASCULINO"));
+        assertEquals(Gender.MASCULINO, controller.getPeople().get(0).getGender());
     }
 
     @Test
-    public void testAddPersonGenderNo() {
-        FormEvent ev = buildFormEvent("Test", "occ", 0, "yes", true, "1", "no");
-        controller.addPerson(ev);
-        assertEquals(Gender.no, controller.getPeople().get(0).getGender());
+    public void testAddPersonGenderFeminino() {
+        controller.addPerson(buildFormEvent("Test", "occ", 0, "Empregado", true, "1", "FEMININO"));
+        assertEquals(Gender.FEMININO, controller.getPeople().get(0).getGender());
     }
 
     @Test
-    public void testAddPersonUsCitizenTrue() {
-        FormEvent ev = buildFormEvent("Test", "occ", 0, "yes", true, "1", "yes");
-        controller.addPerson(ev);
-        assertTrue(controller.getPeople().get(0).isUsCitizen());
+    public void testAddPersonAtivoTrue() {
+        controller.addPerson(buildFormEvent("Test", "occ", 0, "Empregado", true, "1", "MASCULINO"));
+        assertTrue(controller.getPeople().get(0).isAtivo());
     }
 
     @Test
-    public void testAddPersonUsCitizenFalse() {
-        FormEvent ev = buildFormEvent("Test", "occ", 0, "yes", false, "1", "yes");
-        controller.addPerson(ev);
-        assertFalse(controller.getPeople().get(0).isUsCitizen());
+    public void testAddPersonAtivoFalse() {
+        controller.addPerson(buildFormEvent("Test", "occ", 0, "Empregado", false, "1", "MASCULINO"));
+        assertFalse(controller.getPeople().get(0).isAtivo());
     }
-
-    // --- Testes de removePerson ---
 
     @Test
     public void testRemovePersonReducesCount() {
-        FormEvent ev = buildFormEvent("Lucas Lima", "Professor",
-                0, "yes", true, "111", "yes");
-        controller.addPerson(ev);
+        controller.addPerson(buildFormEvent("Lucas Lima", "Professor", 0, "Empregado", true, "111", "MASCULINO"));
         controller.removePerson(0);
         assertEquals(0, controller.getPeople().size());
     }
 
     @Test
     public void testRemoveCorrectPerson() {
-        controller.addPerson(buildFormEvent("Primeiro", "occ", 0, "yes", true, "1", "yes"));
-        controller.addPerson(buildFormEvent("Segundo", "occ", 1, "no", false, "2", "no"));
+        controller.addPerson(buildFormEvent("Primeiro", "occ", 0, "Empregado", true, "1", "MASCULINO"));
+        controller.addPerson(buildFormEvent("Segundo", "occ", 1, "Desempregado", false, "2", "FEMININO"));
         controller.removePerson(0);
         assertEquals("Segundo", controller.getPeople().get(0).getName());
     }
-
-    // --- Testes de getPeople ---
 
     @Test
     public void testGetPeopleInitiallyEmpty() {
@@ -146,13 +117,10 @@ public class ControllerIntegrationTest {
 
     @Test
     public void testGetPeopleReturnsUnmodifiableList() {
-        List<Person> people = controller.getPeople();
         try {
-            people.add(new Person("X", "Y", AgeCategory.IDOSO,
-                    EmploymentCategory.other, "0", false, Gender.no));
-            fail("Lista deveria ser imutável");
-        } catch (UnsupportedOperationException e) {
-            // Comportamento esperado
-        }
+            controller.getPeople().add(new Person("X", "Y", AgeCategory.IDOSO,
+                    EmploymentCategory.other, "0", false, Gender.FEMININO));
+            fail("Lista deveria ser imutavel");
+        } catch (UnsupportedOperationException e) {}
     }
 }
