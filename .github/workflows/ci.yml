@@ -19,12 +19,20 @@ jobs:
         java-version: "17"
         distribution: "temurin"
         
-    - name: Compilar Projeto Legado com Encoding Correto
+    - name: Baixar Dependências Legadas (.jar)
+      run: |
+        mkdir -p lib
+        # Baixa o Driver do MySQL Antigo
+        curl -L -o lib/mysql-connector-java.jar https://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.49/mysql-connector-java-5.1.49.jar
+        # Baixa a biblioteca WebLookAndFeel (WebLaF)
+        curl -L -o lib/weblaf-core.jar https://repo1.maven.org/maven2/com/weblookandfeel/weblaf-core/1.2.9/weblaf-core-1.2.9.jar
+        
+    - name: Compilar Projeto Legado com Libs externas
       run: |
         mkdir -p bin
         find src -name "*.java" > sources.txt
         if [ -s sources.txt ]; then
-          javac -encoding Windows-1252 -d bin @sources.txt
+          javac -encoding Windows-1252 -cp "lib/*" -d bin @sources.txt
           echo "Compilação concluída com sucesso!"
         else
           echo "Nenhum arquivo Java encontrado para compilar."
