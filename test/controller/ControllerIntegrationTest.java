@@ -63,31 +63,31 @@ public class ControllerIntegrationTest {
     }
 
     @Test
-    public void testAddPersonMapsAgeCategoryCorrectly_Nissan() {
+    public void testAddPersonMapsAgeCategoryCorrectly_Crianca() {
         FormEvent ev = buildFormEvent("Test", "occ", 0, "yes", true, "1", "yes");
         controller.addPerson(ev);
-        assertEquals(AgeCategory.Nissan, controller.getPeople().get(0).getAgeCategory());
+        assertEquals(AgeCategory.CRIANCA, controller.getPeople().get(0).getAgeCategory());
     }
 
     @Test
-    public void testAddPersonMapsAgeCategoryCorrectly_Mazda() {
+    public void testAddPersonMapsAgeCategoryCorrectly_Adolescente() {
         FormEvent ev = buildFormEvent("Test", "occ", 1, "yes", true, "1", "yes");
         controller.addPerson(ev);
-        assertEquals(AgeCategory.Mazda, controller.getPeople().get(0).getAgeCategory());
+        assertEquals(AgeCategory.ADOLESCENTE, controller.getPeople().get(0).getAgeCategory());
     }
 
     @Test
-    public void testAddPersonMapsAgeCategoryCorrectly_LandRover() {
+    public void testAddPersonMapsAgeCategoryCorrectly_Adulto() {
         FormEvent ev = buildFormEvent("Test", "occ", 2, "yes", true, "1", "yes");
         controller.addPerson(ev);
-        assertEquals(AgeCategory.Land_Rover, controller.getPeople().get(0).getAgeCategory());
+        assertEquals(AgeCategory.ADULTO, controller.getPeople().get(0).getAgeCategory());
     }
 
     @Test
-    public void testAddPersonMapsAgeCategoryCorrectly_Honda() {
+    public void testAddPersonMapsAgeCategoryCorrectly_Idoso() {
         FormEvent ev = buildFormEvent("Test", "occ", 4, "yes", true, "1", "yes");
         controller.addPerson(ev);
-        assertEquals(AgeCategory.Honda, controller.getPeople().get(0).getAgeCategory());
+        assertEquals(AgeCategory.IDOSO, controller.getPeople().get(0).getAgeCategory());
     }
 
     @Test
@@ -148,7 +148,7 @@ public class ControllerIntegrationTest {
     public void testGetPeopleReturnsUnmodifiableList() {
         List<Person> people = controller.getPeople();
         try {
-            people.add(new Person("X", "Y", AgeCategory.Honda,
+            people.add(new Person("X", "Y", AgeCategory.IDOSO,
                     EmploymentCategory.other, "0", false, Gender.no));
             fail("Lista deveria ser imutável");
         } catch (UnsupportedOperationException e) {

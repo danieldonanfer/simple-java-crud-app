@@ -14,7 +14,7 @@ public class PersonTest {
 
     @Before
     public void setUp() {
-        person = new Person("Ana Silva", "Engenheira", AgeCategory.Nissan,
+        person = new Person("Ana Silva", "Engenheira", AgeCategory.ADULTO,
                 EmploymentCategory.yes, "123.456.789-00", true, Gender.yes);
     }
 
@@ -88,8 +88,8 @@ public class PersonTest {
 
     @Test
     public void testSetAgeCategory() {
-        person.setAgeCategory(AgeCategory.Mazda);
-        assertEquals(AgeCategory.Mazda, person.getAgeCategory());
+        person.setAgeCategory(AgeCategory.ADOLESCENTE);
+        assertEquals(AgeCategory.ADOLESCENTE, person.getAgeCategory());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class PersonTest {
 
     @Test
     public void testConstructorWithExplicitId() {
-        Person p = new Person(99, "Carlos", "Analista", AgeCategory.Honda,
+        Person p = new Person(99, "Carlos", "Analista", AgeCategory.IDOSO,
                 EmploymentCategory.sklad, "111", false, Gender.no);
         assertEquals(99, p.getId());
         assertEquals("Carlos", p.getName());
@@ -137,9 +137,9 @@ public class PersonTest {
 
     @Test
     public void testTwoPersonsHaveDifferentIds() {
-        Person p1 = new Person("P1", "occ", AgeCategory.Nissan,
+        Person p1 = new Person("P1", "occ", AgeCategory.CRIANCA,
                 EmploymentCategory.yes, "1", true, Gender.yes);
-        Person p2 = new Person("P2", "occ", AgeCategory.Mazda,
+        Person p2 = new Person("P2", "occ", AgeCategory.ADOLESCENTE,
                 EmploymentCategory.no, "2", false, Gender.no);
         assertNotEquals("Dois Person distintos não devem ter o mesmo ID", p1.getId(), p2.getId());
     }
