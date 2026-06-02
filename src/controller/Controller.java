@@ -48,10 +48,10 @@ public class Controller {
 
 		EmploymentCategory empCategory;
 		switch (empCat) {
-			case "CLT":          empCategory = EmploymentCategory.CLT;          break;
-			case "PJ":           empCategory = EmploymentCategory.PJ;           break;
-			case "Estagiario":   empCategory = EmploymentCategory.ESTAGIARIO;   break;
-			default:             empCategory = EmploymentCategory.TERCEIRIZADO;
+			case "Umowa o prace": empCategory = EmploymentCategory.CLT;          break;
+			case "B2B":           empCategory = EmploymentCategory.PJ;           break;
+			case "Staztysta":     empCategory = EmploymentCategory.ESTAGIARIO;   break;
+			default:              empCategory = EmploymentCategory.TERCEIRIZADO;
 		}
 
 		Gender genderCat = gender.equals("MASCULINO") ? Gender.MASCULINO : Gender.FEMININO;

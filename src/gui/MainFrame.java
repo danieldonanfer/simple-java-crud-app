@@ -49,7 +49,7 @@ public class MainFrame extends JFrame {
 
 	public MainFrame() {
 		
-		super("Cadastro de Pessoas");
+		super("Rejestr Osob");
 		
 		
 	
@@ -305,10 +305,10 @@ public class MainFrame extends JFrame {
 	private JMenuBar createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 
-		JMenu fileMenu = new JMenu("Arquivo");
-		JMenuItem exportDataItem = new JMenuItem("Exportar Dados...");
-		JMenuItem importDataItem = new JMenuItem("Importar Dados...");
-		JMenuItem exitItem = new JMenuItem("Sair");
+		JMenu fileMenu = new JMenu("Plik");
+		JMenuItem exportDataItem = new JMenuItem("Eksportuj dane...");
+		JMenuItem importDataItem = new JMenuItem("Importuj dane...");
+		JMenuItem exitItem = new JMenuItem("Wyjscie");
 		
 		exportDataItem.setIcon(createIcon("/images/1400444602_table-export.png"));
 		importDataItem.setIcon(createIcon("/images/1400444586_import.png"));
@@ -318,10 +318,10 @@ public class MainFrame extends JFrame {
 		fileMenu.addSeparator();
 		fileMenu.add(exitItem);
 		
-		JMenu paramMenu = new JMenu("Ajuda");
-		JMenuItem aboutItem = new JMenuItem("Sobre");
+		JMenu paramMenu = new JMenu("Pomoc");
+		JMenuItem aboutItem = new JMenuItem("O programie");
 		aboutItem.setIcon(createIcon("/images/1400445676_Help.png"));
-		JMenuItem licenseItem = new JMenuItem("Licenca");
+		JMenuItem licenseItem = new JMenuItem("Licencja");
 		
 		paramMenu.add(aboutItem);
 		paramMenu.add(licenseItem);
@@ -331,7 +331,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			 
 				
-				JOptionPane.showMessageDialog(MainFrame.this, "Desenvolvido para Manutencao de Software - UNICSUL","Sobre",1);
+				JOptionPane.showMessageDialog(MainFrame.this, "Opracowane dla Konserwacji Oprogramowania - UNICSUL","O programie",1);
 				
 			
 				
@@ -341,13 +341,13 @@ public class MainFrame extends JFrame {
 		
 		
 
-		JMenu windowMenu = new JMenu("Janela");
+		JMenu windowMenu = new JMenu("Okno");
 
-		JMenu showMenu = new JMenu("Exibir");
+		JMenu showMenu = new JMenu("Widok");
 
-		JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Painel de Cadastro");
+		JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Panel rejestracji");
 		showFormItem.setIcon(createIcon("/images/1400445557_Windows_16x16.png"));
-		JCheckBoxMenuItem showConsole = new JCheckBoxMenuItem("Console");
+		JCheckBoxMenuItem showConsole = new JCheckBoxMenuItem("Konsola");
 		showConsole.setIcon(createIcon("/images/1400445557_Windows_16x16.png"));
 		showFormItem.setSelected(true);
 		showConsole.setSelected(true);
@@ -415,8 +415,8 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				int action = JOptionPane.showConfirmDialog(MainFrame.this,
-						"Deseja realmente sair do sistema?",
-						"Confirmar Saida", JOptionPane.OK_CANCEL_OPTION);
+						"Czy naprawde chcesz wyjsc?",
+						"Potwierdz wyjscie", JOptionPane.OK_CANCEL_OPTION);
 
 				if (action == JOptionPane.OK_OPTION) {
 					System.exit(0);

@@ -54,15 +54,15 @@ public class FormPanel extends JPanel {
 		dim.width = 300;
 		setPreferredSize(dim);
 
-		nameLabel       = new JLabel("Nome:");
-		cpfLabel        = new JLabel("CPF:");
-		nascimentoLabel = new JLabel("Nascimento:");
-		occupationLabel = new JLabel("Cargo:");
+		nameLabel       = new JLabel("Imie:");
+		cpfLabel        = new JLabel("PESEL:");
+		nascimentoLabel = new JLabel("Data urodzenia:");
+		occupationLabel = new JLabel("Stanowisko:");
 		emailLabel      = new JLabel("E-mail:");
-		telefoneLabel   = new JLabel("Telefone:");
-		contratoLabel   = new JLabel("Contrato:");
-		ativoLabel      = new JLabel("Ativo:");
-		generoLabel     = new JLabel("Genero:");
+		telefoneLabel   = new JLabel("Telefon:");
+		contratoLabel   = new JLabel("Umowa:");
+		ativoLabel      = new JLabel("Aktywny:");
+		generoLabel     = new JLabel("Plec:");
 
 		nameField       = new JTextField(12);
 		cpfField        = new JTextField(12);
@@ -73,18 +73,18 @@ public class FormPanel extends JPanel {
 		telefoneField   = new JTextField(12);
 
 		DefaultComboBoxModel contratoModel = new DefaultComboBoxModel();
-		contratoModel.addElement("CLT");
-		contratoModel.addElement("PJ");
-		contratoModel.addElement("Estagiario");
-		contratoModel.addElement("Terceirizado");
+		contratoModel.addElement("Umowa o prace");
+		contratoModel.addElement("B2B");
+		contratoModel.addElement("Staztysta");
+		contratoModel.addElement("Podwykonawca");
 		contratoCombo = new JComboBox(contratoModel);
 		contratoCombo.setSelectedIndex(0);
 
 		ativoCheck = new JCheckBox();
 		ativoCheck.setSelected(true);
 
-		maleRadio   = new JRadioButton("Masculino");
-		femaleRadio = new JRadioButton("Feminino");
+		maleRadio   = new JRadioButton("Mezczyzna");
+		femaleRadio = new JRadioButton("Kobieta");
 		maleRadio.setActionCommand("MASCULINO");
 		femaleRadio.setActionCommand("FEMININO");
 		maleRadio.setSelected(true);
@@ -93,7 +93,7 @@ public class FormPanel extends JPanel {
 		genderGroup.add(maleRadio);
 		genderGroup.add(femaleRadio);
 
-		okBtn = new JButton("Cadastrar");
+		okBtn = new JButton("Dodaj");
 		okBtn.setMnemonic(KeyEvent.VK_C);
 
 		okBtn.addActionListener(new ActionListener() {
@@ -117,7 +117,7 @@ public class FormPanel extends JPanel {
 			}
 		});
 
-		Border innerBorder = BorderFactory.createTitledBorder("Dados do Colaborador");
+		Border innerBorder = BorderFactory.createTitledBorder("Dane Pracownika");
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
