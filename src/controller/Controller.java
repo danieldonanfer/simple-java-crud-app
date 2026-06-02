@@ -74,18 +74,17 @@ public class Controller {
 		
 		EmploymentCategory empCategory;
 		
-		if(empCat.equals("����")) {
+		if(empCat.equals("Empregado")) {
 			empCategory = EmploymentCategory.yes;
 		}
-		else if(empCat.equals("���")) {
+		else if(empCat.equals("Desempregado")) {
 			empCategory = EmploymentCategory.no;
 		}
-		else if(empCat.equals("�����")) {
+		else if(empCat.equals("Autonomo")) {
 			empCategory = EmploymentCategory.sklad;
 		}
 		else {
 			empCategory = EmploymentCategory.other;
-			System.err.println(empCat);
 		}
 		
 		Gender genderCat;
