@@ -2,7 +2,6 @@ package model;
 
 import org.junit.Test;
 import org.junit.Before;
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 import static org.junit.Assert.*;
@@ -23,11 +22,11 @@ public class DatabaseTest {
     @Before
     public void setUp() {
         db = new Database();
-        p1 = new Person("Maria Oliveira", "Medica", AgeCategory.ADULTO,
-                EmploymentCategory.yes, "111.222.333-44", true, Gender.FEMININO,
+        p1 = new Person("Maria Oliveira", "Medica", "10/05/1985",
+                EmploymentCategory.CLT, "111.222.333-44", true, Gender.FEMININO,
                 "maria@email.com", "11900000001");
-        p2 = new Person("Pedro Costa", "Advogado", AgeCategory.ADOLESCENTE,
-                EmploymentCategory.no, "555.666.777-88", false, Gender.MASCULINO,
+        p2 = new Person("Pedro Costa", "Advogado", "22/08/1990",
+                EmploymentCategory.PJ, "555.666.777-88", false, Gender.MASCULINO,
                 "pedro@email.com", "11900000002");
     }
 
@@ -87,10 +86,9 @@ public class DatabaseTest {
         db.addPerson(p1);
         File file = tempFolder.newFile("people2.dat");
         db.saveToFile(file);
-        db.addPerson(p2);
         Database db2 = new Database();
-        db2.addPerson(new Person("Extra", "Extra", AgeCategory.IDOSO,
-                EmploymentCategory.other, "000", false, Gender.MASCULINO));
+        db2.addPerson(new Person("Extra", "Extra", "01/01/2000",
+                EmploymentCategory.ESTAGIARIO, "000", false, Gender.MASCULINO));
         db2.loadFromFile(file);
         assertEquals(1, db2.getPeople().size());
         assertEquals("Maria Oliveira", db2.getPeople().get(0).getName());
@@ -104,11 +102,13 @@ public class DatabaseTest {
         Database db2 = new Database();
         db2.loadFromFile(file);
         Person loaded = db2.getPeople().get(0);
-        assertEquals(p1.getName(), loaded.getName());
-        assertEquals(p1.getOccupation(), loaded.getOccupation());
-        assertEquals(p1.getAgeCategory(), loaded.getAgeCategory());
-        assertEquals(p1.getTaxId(), loaded.getTaxId());
-        assertEquals(p1.isAtivo(), loaded.isAtivo());
-        assertEquals(p1.getGender(), loaded.getGender());
+        assertEquals(p1.getName(),            loaded.getName());
+        assertEquals(p1.getOccupation(),      loaded.getOccupation());
+        assertEquals(p1.getDataNascimento(),  loaded.getDataNascimento());
+        assertEquals(p1.getTaxId(),           loaded.getTaxId());
+        assertEquals(p1.isAtivo(),            loaded.isAtivo());
+        assertEquals(p1.getGender(),          loaded.getGender());
+        assertEquals(p1.getEmail(),           loaded.getEmail());
+        assertEquals(p1.getTelefone(),        loaded.getTelefone());
     }
 }
