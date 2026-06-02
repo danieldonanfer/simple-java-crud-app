@@ -89,11 +89,11 @@ public class Controller {
 		
 		Gender genderCat;
 		
-		if(gender.equals("yes")) {
-			genderCat = Gender.yes;
+		if(gender.equals("MASCULINO")) {
+			genderCat = Gender.MASCULINO;
 		}
 		else {
-			genderCat = Gender.no;
+			genderCat = Gender.FEMININO;
 		}
 		
 		Person person = new Person(name, occupation, ageCategory, empCategory, 
