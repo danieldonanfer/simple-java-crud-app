@@ -25,8 +25,8 @@ jobs:
         mkdir -p bin
         mkdir -p lib
 
-    - name: Compilar o projeto
-      run: javac -d bin -cp "lib/*" $(find src -name "*.java")
+   - name: Compilar o projeto
+      run: javac -encoding windows-1251 -d bin -cp "lib/*" $(find src -name "*.java")
       
     - name: Verificar sucesso da compilação
       run: echo "Compilação concluída com sucesso! Nenhuma quebra no código."
