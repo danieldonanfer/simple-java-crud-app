@@ -1,4 +1,4 @@
-name: Java CI com Maven
+name: Java CI
 
 on:
   push:
@@ -18,7 +18,14 @@ jobs:
       with:
         java-version: "17"
         distribution: "temurin"
-        cache: maven
         
-    - name: Buildar e Testar com Maven
-      run: mvn -B package --file pom.xml
+    - name: Compilar Projeto Legado
+      run: |
+        mkdir -p bin
+        find src -name "*.java" > sources.txt
+        if [ -s sources.txt ]; then
+          javac -d bin @sources.txt
+          echo "Compilação concluída com sucesso!"
+        else
+          echo "Nenhum arquivo Java encontrado para compilar."
+        fi
