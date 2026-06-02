@@ -1,6 +1,6 @@
 package model;
 
 public enum Gender {
-	yes,
-	no
+	MASCULINO,
+	FEMININO
 }
