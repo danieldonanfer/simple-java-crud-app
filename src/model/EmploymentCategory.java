@@ -1,17 +1,17 @@
 package model;
 
 public enum EmploymentCategory {
-	yes("Empregado"),
-	no("Desempregado"),
-	sklad("Autonomo"),
-	other("Outro");
+	CLT("CLT"),
+	PJ("PJ"),
+	ESTAGIARIO("Estagiario"),
+	TERCEIRIZADO("Terceirizado");
 
 	private String text;
-	private EmploymentCategory(String text)
-	{
-		this.text = text;
 
+	private EmploymentCategory(String text) {
+		this.text = text;
 	}
+
 	@Override
 	public String toString() {
 		return text;

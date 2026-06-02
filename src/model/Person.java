@@ -2,16 +2,16 @@ package model;
 
 import java.io.Serializable;
 
-public class Person implements Serializable
-{
-	private static final long serialVersionUID = 4022843652518158650L;
+public class Person implements Serializable {
+
+	private static final long serialVersionUID = 4022843652518158651L;
 
 	private static int count = 1;
 
 	private int id;
 	private String name;
 	private String occupation;
-	private AgeCategory ageCategory;
+	private String dataNascimento;
 	private EmploymentCategory empCat;
 	private String taxId;
 	private boolean ativo;
@@ -19,36 +19,32 @@ public class Person implements Serializable
 	private String email;
 	private String telefone;
 
-	public Person(String name, String occupation, AgeCategory ageCategory,
+	public Person(String name, String occupation, String dataNascimento,
 			EmploymentCategory empCat, String taxId,
-			boolean ativo, Gender gender) {
+			boolean ativo, Gender gender,
+			String email, String telefone) {
 		this.name = name;
 		this.occupation = occupation;
-		this.ageCategory = ageCategory;
+		this.dataNascimento = dataNascimento;
 		this.empCat = empCat;
 		this.taxId = taxId;
 		this.ativo = ativo;
 		this.gender = gender;
-		this.email = "";
-		this.telefone = "";
-
-		this.id = count;
-		count++;
-	}
-
-	public Person(String name, String occupation, AgeCategory ageCategory,
-			EmploymentCategory empCat, String taxId,
-			boolean ativo, Gender gender,
-			String email, String telefone) {
-		this(name, occupation, ageCategory, empCat, taxId, ativo, gender);
 		this.email = email;
 		this.telefone = telefone;
+		this.id = count++;
 	}
 
-	public Person(int id, String name, String occupation, AgeCategory ageCategory,
+	public Person(String name, String occupation, String dataNascimento,
 			EmploymentCategory empCat, String taxId,
 			boolean ativo, Gender gender) {
-		this(name, occupation, ageCategory, empCat, taxId, ativo, gender);
+		this(name, occupation, dataNascimento, empCat, taxId, ativo, gender, "", "");
+	}
+
+	public Person(int id, String name, String occupation, String dataNascimento,
+			EmploymentCategory empCat, String taxId,
+			boolean ativo, Gender gender) {
+		this(name, occupation, dataNascimento, empCat, taxId, ativo, gender);
 		this.id = id;
 	}
 
@@ -61,8 +57,8 @@ public class Person implements Serializable
 	public String getOccupation() { return occupation; }
 	public void setOccupation(String occupation) { this.occupation = occupation; }
 
-	public AgeCategory getAgeCategory() { return ageCategory; }
-	public void setAgeCategory(AgeCategory ageCategory) { this.ageCategory = ageCategory; }
+	public String getDataNascimento() { return dataNascimento; }
+	public void setDataNascimento(String dataNascimento) { this.dataNascimento = dataNascimento; }
 
 	public EmploymentCategory getEmpCat() { return empCat; }
 	public void setEmpCat(EmploymentCategory empCat) { this.empCat = empCat; }
@@ -72,11 +68,6 @@ public class Person implements Serializable
 
 	public boolean isAtivo() { return ativo; }
 	public void setAtivo(boolean ativo) { this.ativo = ativo; }
-
-	/** @deprecated use isAtivo() */
-	public boolean isUsCitizen() { return ativo; }
-	/** @deprecated use setAtivo() */
-	public void setUsCitizen(boolean v) { this.ativo = v; }
 
 	public Gender getGender() { return gender; }
 	public void setGender(Gender gender) { this.gender = gender; }
