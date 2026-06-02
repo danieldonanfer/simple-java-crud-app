@@ -19,12 +19,12 @@ jobs:
         java-version: "17"
         distribution: "temurin"
         
-    - name: Compilar Projeto Legado
+    - name: Compilar Projeto Legado com Encoding Correto
       run: |
         mkdir -p bin
         find src -name "*.java" > sources.txt
         if [ -s sources.txt ]; then
-          javac -d bin @sources.txt
+          javac -encoding Windows-1252 -d bin @sources.txt
           echo "Compilação concluída com sucesso!"
         else
           echo "Nenhum arquivo Java encontrado para compilar."
