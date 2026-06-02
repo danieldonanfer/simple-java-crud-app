@@ -40,9 +40,9 @@ public class FormPanel extends JPanel {
 	private JCheckBox citizenCheck;
 	private JTextField taxField;
 	private JLabel taxLabel;
-	
-	
-	
+
+
+
 	private JRadioButton maleRadio;
 	private JRadioButton femaleRadio;
 	private ButtonGroup genderGroup;
@@ -52,11 +52,11 @@ public class FormPanel extends JPanel {
 		dim.width = 290;
 		setPreferredSize(dim);
 
-		nameLabel = new JLabel("Название: ");
+		nameLabel = new JLabel("Nome: ");
 		nameLabel.setIcon(createIcon("/images/gear.png"));
-		
-		imageChooseLabel = new JLabel("Изображение: ");
-		occupationLabel = new JLabel("Цена: ");
+
+		imageChooseLabel = new JLabel("Imagem: ");
+		occupationLabel = new JLabel("Ocupacao: ");
 	    occupationLabel.setIcon(createIcon("/images/price.png"));
 		nameField = new JTextField(10);
 		imageChooseFieldd  = new JTextField(10);
@@ -65,27 +65,27 @@ public class FormPanel extends JPanel {
 		empCombo = new JComboBox();
 		citizenCheck = new JCheckBox();
 		taxField = new JTextField(10);
-		taxLabel = new JLabel("Код: ");
+		taxLabel = new JLabel("CPF: ");
 		okBtn = new JButton("OK");
 		okBtn.setIcon(createIcon("/images/1400445397_accept.png"));
-		
-		
+
+
 		// Set up mnemomics
 		okBtn.setMnemonic(KeyEvent.VK_O);
-		
+
 		nameLabel.setDisplayedMnemonic(KeyEvent.VK_N);
 		nameLabel.setLabelFor(nameField);
-		
-		maleRadio = new JRadioButton("Сертифицированый");
-		femaleRadio = new JRadioButton("Несертифицированый");
-		
-		maleRadio.setActionCommand("Сертифицированый");
-		femaleRadio.setActionCommand("Несертифицированый");
-		
+
+		maleRadio = new JRadioButton("Masculino");
+		femaleRadio = new JRadioButton("Feminino");
+
+		maleRadio.setActionCommand("yes");
+		femaleRadio.setActionCommand("no");
+
 		genderGroup = new ButtonGroup();
-		
+
 		maleRadio.setSelected(true);
-		
+
 		// Set up gender radios
 		genderGroup.add(maleRadio);
 		genderGroup.add(femaleRadio);
@@ -104,27 +104,27 @@ public class FormPanel extends JPanel {
 
 		// Set up list box
 		DefaultListModel ageModel = new DefaultListModel();
-		ageModel.addElement(new AgeCategory(0, "Nissan"));
-		ageModel.addElement(new AgeCategory(1, "Mazda"));
-		ageModel.addElement(new AgeCategory(2, "Land Rover"));
-		ageModel.addElement(new AgeCategory(3, "Lada"));
-		ageModel.addElement(new AgeCategory(4, "Honda"));
-		
+		ageModel.addElement(new AgeCategory(0, "Crianca"));
+		ageModel.addElement(new AgeCategory(1, "Adolescente"));
+		ageModel.addElement(new AgeCategory(2, "Adulto"));
+		ageModel.addElement(new AgeCategory(3, "Meia-Idade"));
+		ageModel.addElement(new AgeCategory(4, "Idoso"));
+
 		ageList.setModel(ageModel);
-        
+
 		ageList.setPreferredSize(new Dimension(120, 120));
 		ageList.setBorder(BorderFactory.createEtchedBorder());
 		ageList.setSelectedIndex(1);
 
 		// Set up combo box.
 		DefaultComboBoxModel empModel = new DefaultComboBoxModel();
-		empModel.addElement("есть");
-		empModel.addElement("нет");
-		empModel.addElement("склад");
+		empModel.addElement("Empregado");
+		empModel.addElement("Desempregado");
+		empModel.addElement("Autonomo");
 		empCombo.setModel(empModel);
 		empCombo.setSelectedIndex(0);
 		empCombo.setEditable(true);
-		
+
 
 		okBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,7 +134,7 @@ public class FormPanel extends JPanel {
 				String empCat = (String) empCombo.getSelectedItem();
 				String taxId = taxField.getText();
 				boolean usCitizen = citizenCheck.isSelected();
-				
+
 				String gender = genderGroup.getSelection().getActionCommand();
 
 				FormEvent ev = new FormEvent(this, name, occupation, ageCat
@@ -146,8 +146,8 @@ public class FormPanel extends JPanel {
 			}
 		});
 
-		Border innerBorder = BorderFactory.createTitledBorder("Добавить запчасть");
-	
+		Border innerBorder = BorderFactory.createTitledBorder("Adicionar Pessoa");
+
 		Border outerBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
 
@@ -156,14 +156,14 @@ public class FormPanel extends JPanel {
 	private ImageIcon createIcon(String path)
 	{
 		URL url = getClass().getResource(path);
-		
+
 		if(url == null)
 		{
 			System.err.println("Unabled to load image"+path);
 		}
-		
+
 		ImageIcon icon = new ImageIcon(url);
-		
+
 		return icon;
 	}
 
@@ -219,8 +219,8 @@ public class FormPanel extends JPanel {
 		gc.gridx = 0;
 		gc.insets = new Insets(5, 0, 0, 5);
 		gc.anchor = GridBagConstraints.FIRST_LINE_END;
-		
-		JLabel carLabel = new JLabel("Марки: ");
+
+		JLabel carLabel = new JLabel("Faixa Etaria: ");
 		carLabel.setIcon(createIcon("/images/car.png"));
 		add(carLabel, gc);
 
@@ -239,7 +239,7 @@ public class FormPanel extends JPanel {
 		gc.gridx = 0;
 		gc.insets = new Insets(0, 0, 0, 5);
 		gc.anchor = GridBagConstraints.FIRST_LINE_END;
-		JLabel warLabel = new JLabel("Наличие: ");
+		JLabel warLabel = new JLabel("Emprego: ");
 		warLabel.setIcon(createIcon("/images/ware.png"));
 		add(warLabel, gc);
 
@@ -258,7 +258,7 @@ public class FormPanel extends JPanel {
 		gc.gridx = 0;
 		gc.insets = new Insets(0, 0, 0, 5);
 		gc.anchor = GridBagConstraints.FIRST_LINE_END;
-		JLabel iconLabel = new JLabel("Импорт: ");
+		JLabel iconLabel = new JLabel("Cidadao: ");
 		add(iconLabel, gc);
 		iconLabel.setIcon(createIcon("/images/import1.png"));
 
@@ -283,7 +283,7 @@ public class FormPanel extends JPanel {
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.insets = new Insets(0, 0, 0, 0);
 		add(taxField, gc);
-		
+
 		// //////////Next row ///////////////////////////////////
 
 		gc.gridy++;
@@ -294,14 +294,14 @@ public class FormPanel extends JPanel {
 		gc.gridx = 0;
 		gc.insets = new Insets(0, 0, 0, 5);
 		gc.anchor = GridBagConstraints.LINE_END;
-		add(new JLabel("Аттестат: "), gc);
+		add(new JLabel("Genero: "), gc);
 
 		gc.gridx = 1;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.insets = new Insets(0, 0, 0, 0);
 		add(maleRadio, gc);
-		
-		
+
+
 		// //////////Next row ///////////////////////////////////
 
 		gc.gridy++;
@@ -329,7 +329,7 @@ public class FormPanel extends JPanel {
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.insets = new Insets(5, 0, 0, 0);
 		add(imageChooseFieldd, gc);
-		
+
 
 		// //////////Next row ///////////////////////////////////
 
