@@ -1,69 +1,54 @@
 package gui;
-import java.awt.event.KeyEvent;
+
 import java.util.EventObject;
 
 public class FormEvent extends EventObject {
 
 	private String name;
 	private String occupation;
-	private int ageCategory;
+	private String dataNascimento;
 	private String empCat;
 	private String taxId;
-	private boolean usCitizen;
+	private boolean ativo;
 	private String gender;
+	private String email;
+	private String telefone;
 
 	public FormEvent(Object source) {
 		super(source);
 	}
 
-	public FormEvent(Object source, String name, String occupation, int ageCat,
-			String empCat, String taxId, boolean usCitizen, String gender) {
+	public FormEvent(Object source, String name, String occupation,
+			String dataNascimento, String empCat, boolean ativo,
+			String taxId, String gender, String email, String telefone) {
 		super(source);
-
 		this.name = name;
 		this.occupation = occupation;
-		this.ageCategory = ageCat;
+		this.dataNascimento = dataNascimento;
 		this.empCat = empCat;
+		this.ativo = ativo;
 		this.taxId = taxId;
-		this.usCitizen = usCitizen;
 		this.gender = gender;
-	}
-	
-	public String getGender() {
-		return gender;
+		this.email = email;
+		this.telefone = telefone;
 	}
 
-	public String getTaxId() {
-		return taxId;
-	}
+	public String getName() { return name; }
+	public void setName(String name) { this.name = name; }
 
-	public boolean isUsCitizen() {
-		return usCitizen;
-	}
+	public String getOccupation() { return occupation; }
+	public void setOccupation(String occupation) { this.occupation = occupation; }
 
-	public String getName() {
-		return name;
-	}
+	public String getDataNascimento() { return dataNascimento; }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public String getEmploymentCategory() { return empCat; }
 
-	public String getOccupation() {
-		return occupation;
-	}
+	public String getTaxId() { return taxId; }
 
-	public void setOccupation(String occupation) {
-		this.occupation = occupation;
-	}
+	public boolean isAtivo() { return ativo; }
 
-	public int getAgeCategory() {
-		return ageCategory;
-	}
+	public String getGender() { return gender; }
 
-	public String getEmploymentCategory() {
-		return empCat;
-	}
-	
-
+	public String getEmail() { return email; }
+	public String getTelefone() { return telefone; }
 }

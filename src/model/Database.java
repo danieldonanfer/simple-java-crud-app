@@ -1,231 +1,211 @@
 package model;
 
-
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
-import java.sql.ResultSet;
+import java.io.*;
+import java.net.*;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class Database {
-	
+
+	private static final String SUPABASE_URL = "https://iecbtatfvcoaepytgscu.supabase.co/rest/v1";
+	private static final String ANON_KEY     = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImllY2J0YXRmdmNvYWVweXRnc2N1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMTA4OTAsImV4cCI6MjA5NjU4Njg5MH0.ALvwCcWJx6PkE6jq3Kb6jC6EXEGKOOhwKKZYf7eaf1o";
 
 	private List<Person> people;
-	
-	private Connection con;
-	
-	
+	private boolean connected = false;
+
 	public Database() {
 		people = new LinkedList<Person>();
-		
 	}
-	public void connect() throws Exception
-	{
-		if(con != null) return;
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			throw new Exception("Driver not found");
-		}
-		
-		String url = "jdbc:mysql://localhost:3306/swingtest_oleh";
-		con = DriverManager.getConnection(url,"root","");
-		
-	
-		
-		
-		
-		System.out.println("successful connected : " + con);
-	
-	}
-	
-	
-	
-	public void disconnect()
-	{
-		if(con != null)
-		{
-			try {
-				con.close();
-			} catch (SQLException e) {
-				System.out.println("Cant close");
-			}
-		}
-		
-	}
-	
-	
-	
-	public void save() throws SQLException
-	{
-		String checkSql = "select count(*) as count from people where id=?";
-		PreparedStatement checkStmt = con.prepareStatement(checkSql);
-		
-		String insertSql = "insert into people (id , name , age , employment_status, tax_id , us_citizen ,gender, occupation) values (? , ? , ? , ? , ? , ? , ? ,? )  "; 
-		PreparedStatement insertStatement = con.prepareStatement(insertSql);
-		
-		String updateSql = "update people set name=?, age=?, employment_status=?, tax_id=?, us_citizen=?, gender=?, occupation=? where id=?"; 
-		PreparedStatement updateStatement = con.prepareStatement(updateSql);
-		
-		
-		for(Person person: people)
-		{
-			int id = person.getId();
-			String name = person.getName();
-			String occupation = person.getOccupation();
-			AgeCategory age = person.getAgeCategory();
-			EmploymentCategory emp = person.getEmpCat();
-			String tax = person.getTaxId();
-			boolean isUs = person.isUsCitizen();
-			Gender gender = person.getGender();
-			
-			
-			checkStmt.setInt(1, id);
-			
-			ResultSet checkResult = (ResultSet) checkStmt.executeQuery();
-			
-			checkResult.next();
-			
-			int count = checkResult.getInt(1);
-			
-			if(count == 0 )
-			{
-				System.out.println("inserting person with ID : "+id);
-				
-				int col = 1;
-				insertStatement.setInt(col++, id);
-				insertStatement.setString(col++, name);
-				insertStatement.setString(col++, age.name());
-				insertStatement.setString(col++, emp.name());
-				insertStatement.setString(col++, tax);
-				insertStatement.setBoolean(col++, isUs);
-				insertStatement.setString(col++, gender.name());
-				insertStatement.setString(col++, occupation);
-				
-				insertStatement.executeUpdate();
-				
-			
-				
-				
-				
-			}
-			else
-			{
-				System.out.println("Updating person with ID" + id);
-				
-				int col = 1;
-				
-				
-				updateStatement.setString(col++, name);
-				updateStatement.setString(col++, age.name());
-				updateStatement.setString(col++, emp.name());
-				updateStatement.setString(col++, tax);
-				updateStatement.setBoolean(col++, isUs);
-				updateStatement.setString(col++, gender.name());
-				updateStatement.setString(col++, occupation);
-				updateStatement.setInt(col++, id);
-				
-				updateStatement.executeUpdate();
-			}
-			System.out.println("Count for person with id : "+ id + "   is   " + count);
-	
-		}
-		
-		updateStatement.close();
-		insertStatement.close();
-		checkStmt.close();
-	}
-	
-	public void load() throws SQLException
-	{
-		people.clear();
-		
-		String sql = "select id , name , age , employment_status, tax_id , us_citizen ,gender, occupation from people order by name ";
-		
-		Statement selectStatement = con.createStatement();
-		
 
-		
-		ResultSet results = (ResultSet) selectStatement.executeQuery(sql);
-		
-		while(results.next())
-		{
-			int id = results.getInt("id");
-			String name = results.getString("name");
-			String age = results.getString("age");
-			String emp = results.getString("employment_status");
-			String tax = results.getString("tax_id");
-			boolean isUs = results.getBoolean("us_citizen");
-			String gender = results.getString("gender");
-			String occ = results.getString("occupation");
-			
-			
-			Person person = new Person(id,name,occ ,AgeCategory.valueOf(age),EmploymentCategory.valueOf(emp),tax , isUs , Gender.valueOf(gender));
-			people.add(person);
-			
-			
+	public void connect() throws Exception {
+		// Testa se a API do Supabase está acessível
+		URL url = new URL(SUPABASE_URL + "/pessoas?limit=1");
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("apikey", ANON_KEY);
+		conn.setRequestProperty("Authorization", "Bearer " + ANON_KEY);
+		conn.setConnectTimeout(10000);
+		int code = conn.getResponseCode();
+		if (code >= 200 && code < 300) {
+			connected = true;
+			System.out.println("Conectado ao Supabase via REST API. Status: " + code);
+		} else {
+			throw new Exception("Supabase retornou status: " + code);
 		}
-		
-		results.close();
-		selectStatement.close();
-		
+		conn.disconnect();
 	}
+
+	public void disconnect() {
+		connected = false;
+	}
+
+	public void save() throws Exception {
+		if (!connected) throw new Exception("Sem conexao com o banco de dados");
+
+		for (Person p : people) {
+			// UPSERT: POST com Prefer: resolution=merge-duplicates (insert ou update pelo id)
+			String json = toJson(p);
+			URL upsertUrl = new URL(SUPABASE_URL + "/pessoas");
+			HttpURLConnection upsertConn = (HttpURLConnection) upsertUrl.openConnection();
+			upsertConn.setRequestMethod("POST");
+			upsertConn.setRequestProperty("apikey", ANON_KEY);
+			upsertConn.setRequestProperty("Authorization", "Bearer " + ANON_KEY);
+			upsertConn.setRequestProperty("Content-Type", "application/json");
+			upsertConn.setRequestProperty("Prefer", "resolution=merge-duplicates,return=minimal");
+			upsertConn.setDoOutput(true);
+			upsertConn.setConnectTimeout(10000);
+			upsertConn.getOutputStream().write(json.getBytes(StandardCharsets.UTF_8));
+			int code = upsertConn.getResponseCode();
+			if (code >= 400) {
+				String err = readResponse(upsertConn);
+				throw new Exception("Erro ao salvar " + p.getName() + ": HTTP " + code + " - " + err);
+			}
+			upsertConn.disconnect();
+			System.out.println("UPSERT " + p.getName() + " -> HTTP " + code);
+		}
+	}
+
+	public void load() throws Exception {
+		if (!connected) return;
+		people.clear();
+
+		URL url = new URL(SUPABASE_URL + "/pessoas?order=nome");
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("apikey", ANON_KEY);
+		conn.setRequestProperty("Authorization", "Bearer " + ANON_KEY);
+		conn.setConnectTimeout(10000);
+		String body = readResponse(conn);
+		conn.disconnect();
+
+		// Parse JSON simples
+		parseJsonArray(body);
+	}
+
+	private String toJson(Person p) {
+		return "{"
+			+ "\"id\":" + p.getId() + ","
+			+ "\"nome\":\"" + escape(p.getName()) + "\","
+			+ "\"cpf\":\"" + escape(p.getTaxId()) + "\","
+			+ "\"nascimento\":\"" + escape(p.getDataNascimento()) + "\","
+			+ "\"genero\":\"" + p.getGender().name() + "\","
+			+ "\"email\":\"" + escape(p.getEmail()) + "\","
+			+ "\"telefone\":\"" + escape(p.getTelefone()) + "\","
+			+ "\"cargo\":\"" + escape(p.getOccupation()) + "\","
+			+ "\"contrato\":\"" + p.getEmpCat().name() + "\","
+			+ "\"ativo\":" + p.isAtivo()
+			+ "}";
+	}
+
+	private String escape(String s) {
+		if (s == null) return "";
+		return s.replace("\\", "\\\\").replace("\"", "\\\"");
+	}
+
+	private String readResponse(HttpURLConnection conn) throws IOException {
+		InputStream is;
+		try {
+			is = conn.getInputStream();
+		} catch (IOException e) {
+			is = conn.getErrorStream();
+			if (is == null) return "";
+		}
+		BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = br.readLine()) != null) sb.append(line);
+		br.close();
+		return sb.toString();
+	}
+
+	private void parseJsonArray(String json) {
+		// Parser manual simples para o JSON retornado pelo Supabase
+		json = json.trim();
+		if (json.equals("[]") || json.isEmpty()) return;
+		// Remove [ e ]
+		json = json.substring(1, json.length() - 1).trim();
+
+		// Divide por objetos },...,{
+		List<String> objects = splitObjects(json);
+		for (String obj : objects) {
+			try {
+				int id             = Integer.parseInt(getField(obj, "id"));
+				String nome        = getField(obj, "nome");
+				String cpf         = getField(obj, "cpf");
+				String nascimento  = getField(obj, "nascimento");
+				String genero      = getField(obj, "genero");
+				String email       = getField(obj, "email");
+				String telefone    = getField(obj, "telefone");
+				String cargo       = getField(obj, "cargo");
+				String contrato    = getField(obj, "contrato");
+				boolean ativo      = Boolean.parseBoolean(getField(obj, "ativo"));
+
+				Gender g = Gender.valueOf(genero);
+				EmploymentCategory emp = EmploymentCategory.valueOf(contrato);
+
+				Person person = new Person(id, nome, cargo, nascimento, emp, cpf, ativo, g);
+				person.setEmail(email);
+				person.setTelefone(telefone);
+				people.add(person);
+			} catch (Exception e) {
+				System.err.println("Erro ao parsear pessoa: " + e.getMessage());
+			}
+		}
+	}
+
+	private List<String> splitObjects(String json) {
+		List<String> result = new ArrayList<>();
+		int depth = 0;
+		int start = 0;
+		for (int i = 0; i < json.length(); i++) {
+			char c = json.charAt(i);
+			if (c == '{') { if (depth == 0) start = i; depth++; }
+			else if (c == '}') { depth--; if (depth == 0) result.add(json.substring(start, i + 1)); }
+		}
+		return result;
+	}
+
+	private String getField(String json, String key) {
+		String search = "\"" + key + "\":";
+		int idx = json.indexOf(search);
+		if (idx < 0) return "";
+		int start = idx + search.length();
+		char first = json.charAt(start);
+		if (first == '"') {
+			int end = json.indexOf('"', start + 1);
+			return json.substring(start + 1, end);
+		} else {
+			int end = start;
+			while (end < json.length() && json.charAt(end) != ',' && json.charAt(end) != '}') end++;
+			return json.substring(start, end).trim();
+		}
+	}
+
 	public void addPerson(Person person) {
 		people.add(person);
 	}
-	public void removePerson(int index)
-	{
+
+	public void removePerson(int index) {
 		people.remove(index);
-	
 	}
-	
+
 	public List<Person> getPeople() {
 		return Collections.unmodifiableList(people);
 	}
-	public void saveToFile(File file) throws IOException
-	{
-		FileOutputStream fos = new FileOutputStream(file);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		
-		Person[] persons = people.toArray(new Person[people.size()]);
-		
-		oos.writeObject(persons);
-		
-		oos.close();
+
+	public void saveToFile(File file) throws IOException {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
+			oos.writeObject(people.toArray(new Person[0]));
+		}
 	}
-	public void loadFromFile(File file) throws IOException
-	{
-		FileInputStream fis = new FileInputStream(file);
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		
-		try {
+
+	public void loadFromFile(File file) throws IOException {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
 			Person[] persons = (Person[]) ois.readObject();
-			
 			people.clear();
-			
 			people.addAll(Arrays.asList(persons));
-			
-			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		ois.close();
-		
 	}
 }
