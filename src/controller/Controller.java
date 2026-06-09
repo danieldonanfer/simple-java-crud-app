@@ -4,7 +4,6 @@ import gui.FormEvent;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import model.Database;
@@ -19,11 +18,11 @@ public class Controller {
 		return db.getPeople();
 	}
 
-	public void save() throws SQLException {
+	public void save() throws Exception {
 		db.save();
 	}
 
-	public void load() throws SQLException {
+	public void load() throws Exception {
 		db.load();
 	}
 
