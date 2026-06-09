@@ -9,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
@@ -242,9 +241,8 @@ public class MainFrame extends JFrame {
 				}
 				try {
 					controller.save();
-				} catch (SQLException e) {
-					
-					JOptionPane.showMessageDialog(MainFrame.this, "Can not connect to database","Database connection problems",JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(MainFrame.this, "Erro ao salvar: " + e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
 				}
 			
 				textPanel.appendText("Added to database\n");
@@ -257,8 +255,8 @@ public class MainFrame extends JFrame {
 				connect();
 				try {
 					controller.load();
-				} catch (SQLException e) {
-					JOptionPane.showMessageDialog(MainFrame.this, "Are refresh", "Refreshing progress", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(MainFrame.this, "Erro ao carregar: " + e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
 				}
 				tablePanel.refresh();
 				textPanel.appendText("Database is refreshed\n");
@@ -276,7 +274,8 @@ public class MainFrame extends JFrame {
 
 		setMinimumSize(new Dimension(600, 550));
 		setSize(800, 650);
-		
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		refresh();
@@ -296,8 +295,8 @@ public class MainFrame extends JFrame {
 		connect();
 		try {
 			controller.load();
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(MainFrame.this, "Are refresh", "Refreshing progress", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(MainFrame.this, "Erro ao carregar dados: " + e.getMessage(),"Erro",JOptionPane.ERROR_MESSAGE);
 		}
 		tablePanel.refresh();
 	}
